@@ -1,55 +1,14 @@
--- phpMyAdmin SQL Dump
--- version 4.0.9
--- http://www.phpmyadmin.net
---
--- Host: 127.0.0.1
--- Generation Time: Apr 17, 2015 at 11:55 AM
--- Server version: 5.5.34
--- PHP Version: 5.4.22
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
---
--- Database: `the file tracker`
+-- Table structure for table `userslogin`
 --
 
--- --------------------------------------------------------
-
---
--- Table structure for table `category`
---
-
-CREATE TABLE IF NOT EXISTS `category` (
-  `id` tinyint(5) NOT NULL AUTO_INCREMENT,
-  `category_name` varchar(55) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `category_name` (`category_name`)
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` tinyint(5) NOT NULL AUTO_INCREMENT COMMENT 'Many user ids to 1 tracker id',
+  `department_id` tinyint(5) NOT NULL COMMENT 'FK to department table',
+  `username` varchar(55) NOT NULL,
+  `password` varchar(55) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `departments`
---
-
-CREATE TABLE IF NOT EXISTS `departments` (
-  `dept_name` varchar(55) NOT NULL,
-  `dept_head` varchar(55) NOT NULL,
-  `id` tinyint(5) NOT NULL AUTO_INCREMENT COMMENT '1 department to many tracker id/1 department to many offices',
-  PRIMARY KEY (`id`),
-  KEY `dept_name` (`dept_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `files`
 --
 
@@ -72,24 +31,16 @@ CREATE TABLE IF NOT EXISTS `files` (
   KEY `tracker_id_2` (`tracker_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `offices`
+-- Table structure for table `category`
 --
 
-CREATE TABLE IF NOT EXISTS `offices` (
+CREATE TABLE IF NOT EXISTS `category` (
   `id` tinyint(5) NOT NULL AUTO_INCREMENT,
-  `offices_description` varchar(55) NOT NULL,
-  `department_id` varchar(11) NOT NULL COMMENT 'FK to department table',
+  `category_name` varchar(55) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `department_id` (`department_id`),
-  KEY `offices_description` (`offices_description`)
+  KEY `category_name` (`category_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
 -- Table structure for table `trackers`
 --
 
@@ -109,20 +60,25 @@ CREATE TABLE IF NOT EXISTS `trackers` (
   KEY `date_collected` (`date_collected`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `userslogin`
+-- Table structure for table `offices`
 --
 
-CREATE TABLE IF NOT EXISTS `userslogin` (
-  `id` tinyint(5) NOT NULL AUTO_INCREMENT COMMENT 'Many user ids to 1 tracker id',
-  `department_id` tinyint(5) NOT NULL COMMENT 'FK to department table',
-  `username` varchar(55) NOT NULL,
-  `password` varchar(55) NOT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE IF NOT EXISTS `offices` (
+  `id` tinyint(5) NOT NULL AUTO_INCREMENT,
+  `offices_description` varchar(55) NOT NULL,
+  `department_id` varchar(11) NOT NULL COMMENT 'FK to department table',
+  PRIMARY KEY (`id`),
+  KEY `department_id` (`department_id`),
+  KEY `offices_description` (`offices_description`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- Table structure for table `departments`
+--
+
+CREATE TABLE IF NOT EXISTS `departments` (
+  `id` tinyint(5) NOT NULL AUTO_INCREMENT COMMENT '1 department to many tracker id/1 department to many offices',
+  `dept_name` varchar(55) NOT NULL,
+  `dept_head` varchar(55) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `dept_name` (`dept_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
